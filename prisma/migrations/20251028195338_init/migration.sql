@@ -1,0 +1,26 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- CreateTable
+CREATE TABLE [dbo].[Product] (
+    [id] NVARCHAR(1000) NOT NULL,
+    [productName] NVARCHAR(1000) NOT NULL,
+    [productDescription] NVARCHAR(1000) NOT NULL,
+    [unitsLeft] INT NOT NULL,
+    [createdAt] DATETIME2 NOT NULL CONSTRAINT [Product_createdAt_df] DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT [Product_pkey] PRIMARY KEY CLUSTERED ([id])
+);
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH
